@@ -22,8 +22,9 @@ function Welcome() {
         type: "SET_TOKEN",
         access_token: response.data.access_token,
         expiry_timestamp: response.data.expiry_timestamp,
+        renew: false,
       });
-      return response.data; // Return the data for chaining
+      return response.data;
     } catch (error) {
       console.log(error.message);
       return null;
@@ -33,20 +34,43 @@ function Welcome() {
   async function renewToken() {
     const currentTimestamp = Math.floor(Date.now() / 1000);
 
-    if (currentTimestamp >= ctx.oneMap?.expiry_timestamp) {
+    if (
+      ctx.oneMap?.expiry_timestamp &&
+      currentTimestamp >= ctx.oneMap?.expiry_timestamp
+    ) {
       console.log("Token Expired");
       try {
-        const new_response = await fetchToken().post("/", oneMapCreds);
+        const new_response = await fetchToken().post("", oneMapCreds);
         ctx.dispatch({
           type: "SET_TOKEN",
           access_token: new_response.data.access_token,
           expiry_timestamp: new_response.data.expiry_timestamp,
+          renew: true,
         });
+        return true;
       } catch (error) {
         console.log(error.message);
+        return false;
       }
     } else {
       console.log("Token Still Valid");
+      return false;
+    }
+  }
+
+  async function putToken() {
+    try {
+      const response = await mockAPI.put("/belanja/1", {
+        access_token: ctx.oneMap.access_token,
+        expiry_timestamp: ctx.oneMap.expiry_timestamp,
+      });
+      console.log("Token renewed");
+
+      return response.data;
+    } catch (error) {
+      console.log(error.message);
+      console.log("Token not renewed");
+      return null;
     }
   }
 
@@ -56,6 +80,12 @@ function Welcome() {
 
   useEffect(() => {
     renewToken();
+  }, [ctx.oneMap?.expiry_timestamp]);
+
+  useEffect(() => {
+    if (ctx.oneMap.renew === true) {
+      putToken();
+    }
   }, [ctx.oneMap?.expiry_timestamp]);
 
   return (

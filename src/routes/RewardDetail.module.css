@@ -1,0 +1,119 @@
+.divMain {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+}
+
+.divHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  background-color: #533281;
+  width: 100%;
+  padding-top: 5px;
+  /* padding-bottom: 05px; */
+}
+
+.buttonBack {
+  transform: rotate(-180deg);
+  font-size: 30px;
+  height: 50px;
+  width: 50px;
+  background-color: #533281;
+  border: 1px solid transparent;
+  color: white;
+  margin-left: 5px;
+  opacity: 70%;
+}
+
+.header {
+  background-color: #533281;
+  color: white;
+  width: 100%;
+  margin-top: 0px;
+  font-weight: 100;
+  padding-right: 45px;
+}
+
+.message {
+  background-color: rgb(255, 82, 82);
+  color: white;
+  width: 100%;
+  margin-top: 0px;
+  height: 25px;
+}
+
+.messageInactive {
+  background-color: rgb(255, 82, 82);
+  color: white;
+  width: 100%;
+  margin-top: 0px;
+  height: 25px;
+  opacity: 0%;
+}
+
+.img {
+  width: 100%;
+  height: 200px;
+  object-fit: contain;
+  margin-top: 20px;
+  /* object-position: Top; */
+  /* border-radius: 50px; */
+  /* margin: 10px; */
+  /* background-color: aqua; */
+}
+
+.divNameCoins {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 15px;
+  border-bottom: 5px solid #533281;
+}
+
+.name,
+.coins {
+  text-align: center;
+  margin: 0px;
+  padding: 0px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.coins {
+  margin-bottom: 10px;
+}
+
+.divDetails {
+  padding: 10px;
+}
+
+.divDetails > p {
+  text-align: left;
+}
+
+.buttonLong {
+  font-size: 15px;
+  width: 90%;
+  border-radius: 100px;
+  border: 1px solid transparent;
+  height: 50px;
+  font-weight: bolder;
+  color: white;
+  background-color: #5d3891;
+  margin-top: 15px;
+}
+
+.buttonLong:hover {
+  background-color: #7447b4;
+}
+
+.buttonLong:disabled {
+  background-color: #7e7e7e;
+}

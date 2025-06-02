@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 
 import styles from "./AccountPage.module.css";
 
-
 function AccountPage() {
   const ctx = useContext(ProductContext);
   const navigate = useNavigate();
@@ -18,11 +17,22 @@ function AccountPage() {
           alt="User Photo"
         ></img>
         <h2 className={styles.walletText}>Balenja Wallet</h2>
-        <h2 className={styles.wallet}>{`$${Number(ctx.user.wallet).toFixed(2)}`}</h2>
+        <h2 className={styles.wallet}>{`$${Number(ctx.user.wallet).toFixed(
+          2
+        )}`}</h2>
       </div>
       <div className={styles.divButtons}>
-        <button className={styles.buttonTopup} onClick={() => navigate("/topup")}>
+        <button
+          className={styles.buttonTopup}
+          onClick={() => navigate("/topup")}
+        >
           💷 Top up
+        </button>
+        <button
+          className={styles.buttonTopup}
+          onClick={() => navigate("/rewards")}
+        >
+          🎁 Rewards
         </button>
         <button
           className={styles.buttonLogout}

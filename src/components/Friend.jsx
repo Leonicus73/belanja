@@ -6,13 +6,10 @@ function Friend({ id, debt }) {
   const ctx = useContext(ProductContext);
   const friend = ctx.userList.find((user) => user.id === id);
 
-    if (!friend) {
+  if (!friend) {
     console.warn("Friend not found in user.friends:", id);
     return <p className={styles.pName}>Friend not found.</p>;
   }
-  // console.log("Checking friend:", friend);
-  // console.log("User List:", ctx.userList);
-  // console.log("Looking for ID:", id);
 
   let debtStatement = (
     <div className={styles.pDetails}>{friend.name} and you are even.</div>

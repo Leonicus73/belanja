@@ -47,7 +47,7 @@ function PaymentPage() {
 
   useEffect(() => {
     getReverseGeocode();
-  }, []);
+  }, [ctx.location?.latlong]);
 
   const ValidateValue = () => {
     if (!ctx.merchant.payment || ctx.merchant.payment <= 0) {

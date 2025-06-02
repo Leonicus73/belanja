@@ -20,7 +20,11 @@ import SignUpPage from "./routes/SignUpPage";
 import TopUpPage from "./routes/TopUpPage";
 import PayNowPage from "./routes/PayNowPage";
 import PayFriendSucessfulPage from "./routes/PayFriendSucessfulPage";
-
+import RewardsPage from "./routes/RewardsPage";
+import RewardDetail from "./routes/RewardDetail";
+import MyRewardsPage from "./routes/MyRewardsPage";
+import UseRewards from "./routes/UseRewards";
+import CoinsHistory from "./routes/CoinsHistory";
 
 import styles from "./App.module.css";
 
@@ -42,6 +46,11 @@ function App() {
               <Route path="bill/:id" element={<Bill />} />
               <Route path="bill/receipt/:id" element={<Receipt />} />
               <Route path="topup" element={<TopUpPage />} />
+              <Route path="rewards" element={<RewardsPage />} />
+              <Route path="rewards/:rewardId" element={<RewardDetail />} />
+              <Route path="myRewards" element={<MyRewardsPage />} />
+              <Route path="myRewards/:uuid" element={<UseRewards />} />
+              <Route path="coinsHistory" element={<CoinsHistory />} />
             </Route>
             <Route path="SignUpPage" element={<SignUpPage />} />
             <Route path="payfriend/:id" element={<PayFriend />} />

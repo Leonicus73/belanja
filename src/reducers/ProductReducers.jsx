@@ -30,6 +30,7 @@ export const defaultProduct = {
   oneMap: {
     access_token: null,
     expiry_timestamp: null,
+    renew: false,
   },
   location: {
     latitude: null,
@@ -73,13 +74,18 @@ export function productReducer(state, action) {
 
     case "LOGOUT": {
       const user = { ...state.user, bills: state.bills };
-      const updatedUserList = state.userList.map((u) =>
-        u.id === state.user.id ? user : u
-      );
+      // const updatedUserList = state.userList.map((u) =>
+      //   u.id === state.user.id ? user : u
+      // );
+      for (const key in state.userList) {
+        if (state.userList[key].id === state.user.id) {
+          state.userList[key] = user;
+        }
+      }
 
       return {
         ...state,
-        userList: updatedUserList,
+        // userList: updatedUserList,
         isLoggedIn: false,
         user: null,
         loginNameInput: defaultProduct.loginNameInput,
@@ -682,8 +688,48 @@ export function productReducer(state, action) {
       return {
         ...state,
         oneMap: {
+          renew: action.renew,
           access_token: action.access_token,
           expiry_timestamp: action.expiry_timestamp,
+        },
+      };
+    }
+
+    case "REDEEM_REWARD": {
+      const { name, coins, rewardId } = action.payload;
+      const newReward = {
+        uuid: uuid(),
+        rewardId,
+        name,
+        coins,
+        used: false,
+      };
+
+      const updatedCoins = state.user.coins - coins;
+
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          coins: updatedCoins,
+          myRewards: [...(state.user.myRewards || []), newReward],
+        },
+      };
+    }
+
+    case "USE_REWARD": {
+      const updatedMyRewards = state.user.myRewards.map((reward) => {
+        if (reward.uuid === action.uuid) {
+          return { ...reward, used: true };
+        }
+        return reward;
+      });
+
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          myRewards: updatedMyRewards,
         },
       };
     }

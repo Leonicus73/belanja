@@ -1,0 +1,14 @@
+[[redirects]]
+  from = "/api/onemap/*"
+  to = "https://www.onemap.gov.sg/:splat"
+  status = 200
+  force = true
+  headers = {Access-Control-Allow-Origin = "*"}
+
+[[redirects]]
+  from = "/api/onemap/auth/post/getToken"
+  to = "https://www.onemap.gov.sg/api/auth/post/getToken"
+  status = 200
+  force = true
+  method = "POST"
+  headers = {Access-Control-Allow-Origin = "*"}

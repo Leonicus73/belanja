@@ -10,6 +10,7 @@ export default defineConfig({
         target: "https://www.onemap.gov.sg",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/oneMapProxy/, ""),
+        secure: false,
       },
     },
   },

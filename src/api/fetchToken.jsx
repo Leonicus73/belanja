@@ -4,7 +4,7 @@ const isProduction = import.meta.env.PROD;
 
 function fetchToken() {
   const url = isProduction
-    ? "https://www.onemap.gov.sg//api/auth/post/getToken"
+    ? "/api/onemap/auth/post/getToken"
     : "/oneMapProxy/api/auth/post/getToken";
   return axios.create({
     baseURL: url,

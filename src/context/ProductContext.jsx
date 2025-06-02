@@ -215,14 +215,15 @@ export function ProductProvider({ children }) {
         Month: new Date().toLocaleString("default", { month: "short" }),
         year: new Date().getFullYear(),
       },
-      fullPayeeList: [{
-        id: state.user.id, // ✅ Adds logged-in user as a payee
-        name: state.user.name,
-        float: "",
-        percentage: "",
-        final: 0,
-      },
-    ],
+      fullPayeeList: [
+        {
+          id: state.user.id, // ✅ Adds logged-in user as a payee
+          name: state.user.name,
+          float: "",
+          percentage: "",
+          final: 0,
+        },
+      ],
     };
 
     dispatch({
@@ -297,6 +298,16 @@ export function ProductProvider({ children }) {
     dispatch({ type: "GET_LOCATION" });
   };
 
+  const handleRedeemReward = ({ name, coins, rewardId }) => {
+    dispatch({ type: "REDEEM_REWARD", payload: { name, coins, rewardId } });
+    navigate("/myRewards/");
+  };
+
+  const handleUseReward = (uuid) => {
+    dispatch({ type: "USE_REWARD", uuid: uuid });
+    navigate("/myRewards/");
+  };
+
   const data = {
     userList: state.userList,
     loginNameInput: state.loginNameInput,
@@ -339,6 +350,8 @@ export function ProductProvider({ children }) {
     handleClearMessages,
     handlerOnChangePasswordInput,
     handleNaviScan,
+    handleRedeemReward,
+    handleUseReward,
   };
 
   return (
