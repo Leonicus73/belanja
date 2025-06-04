@@ -5,6 +5,40 @@
   align-content: center;
 }
 
+.divHeader {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+  align-content: center;
+  background-color: #533281;
+  width: 100%;
+  padding-top: 5px;
+  /* padding-bottom: 05px; */
+}
+
+.buttonBack {
+  transform: rotate(-180deg);
+  font-size: 30px;
+  height: 50px;
+  width: 50px;
+  background-color: #533281;
+  border: 1px solid transparent;
+  color: white;
+  margin-left: 5px;
+  opacity: 70%;
+}
+
+.header {
+  background-color: #533281;
+  color: white;
+  width: 100%;
+  margin-top: 0px;
+  font-weight: 100;
+  padding-right: 45px;
+}
+
 .settlement {
   background-color: #533281;
   color: white;
@@ -79,6 +113,13 @@
   /* font-size: 20px; */
 }
 
+.divSelectAndList {
+  width: 99%;
+  /* background-color: aqua; */
+  height: 480px;
+  overflow-y: auto;
+}
+
 .divSelect {
   display: flex;
   align-items: center;
@@ -104,7 +145,7 @@
   justify-content: top;
   align-content: center;
   align-items: center;
-  overflow-y: auto;
+  /* overflow-y: auto; */
   /* gap: 100px; */
 }
 

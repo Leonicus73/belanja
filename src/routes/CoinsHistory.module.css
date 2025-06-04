@@ -40,3 +40,14 @@
   font-weight: 100;
   padding-right: 45px;
 }
+
+.userCoins {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.divCoinsHistory {
+  height: 750px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}

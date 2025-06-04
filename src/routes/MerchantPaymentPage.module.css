@@ -1,0 +1,130 @@
+.h2BelanjaPay {
+  margin-top: 40px;
+  /* font-size: 20px;
+  font-weight: 500; */
+  color: #5d3891;
+}
+
+.message {
+  height: 25px;
+  font-style: italic;
+  color: rgb(227, 26, 26);
+}
+
+.h2MerchantName {
+  text-transform: capitalize;
+}
+
+.address {
+  text-transform: capitalize;
+  text-align: center;
+  font-size: 12px;
+  /* font-style: italic; */
+  padding-left: 60px;
+  padding-right: 70px;
+  opacity: 90%;
+  height: 40px;
+}
+
+.divPayField {
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(224, 224, 224);
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.inputPayField {
+  text-align: center;
+  background-color: rgb(224, 224, 224);
+  border: none;
+  font-size: 50px;
+}
+
+.inputPayField:focus {
+  outline: none;
+}
+
+.inputPayField:focus::placeholder {
+  color: transparent;
+}
+
+.inputPayField::-webkit-outer-spin-button,
+.inputPayField::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.buttonBack {
+  transform: rotate(-180deg);
+  font-size: 30px;
+  height: 50px;
+  width: 50px;
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: #5d3891;
+  margin-top: 20px;
+  opacity: 100%;
+}
+
+.buttonBack:hover {
+  opacity: 100%;
+}
+
+.divWallet {
+  margin-top: 330px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 2px solid #5d3891;
+}
+
+.divTotalPrice {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+}
+
+.divPaymentWrapped {
+  display: flex;
+  flex-direction: row;
+  border-top: 2px solid #5d3891;
+  justify-content: space-between;
+  padding: 10px;
+  padding-top: 27px;
+}
+
+.buttonPayment {
+  width: 300px;
+  border-radius: 100px;
+  height: 70px;
+  border: 0px solid transparent;
+  background-color: #533281;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  box-shadow: 1px 1px 5px 1px rgb(204, 204, 204);
+}
+
+.buttonPayment:hover {
+  background-color: #6f42ae;
+}
+
+.buttonPayment:disabled {
+  background-color: #7e7e7e;
+}
+
+.pTotal,
+.pPrice {
+  padding: 0px;
+  margin: 0px;
+}
+
+.pTotal {
+  font-size: 12px;
+}
+.pPrice {
+  font-size: 25px;
+  font-weight: 500;
+  text-align: left;
+}

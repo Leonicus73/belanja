@@ -62,6 +62,7 @@ function RewardDetail() {
             name: reward.name,
             coins: reward.coins,
             rewardId: reward.rewardId,
+            mode: "redeem",
           })
         }
       >

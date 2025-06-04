@@ -1,0 +1,28 @@
+.divMain {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  justify-items: center;
+  width: 100px;
+  height: 100px;
+  /* background-color: aquamarine; */
+  /* margin: 10px; */
+}
+
+.img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  /* object-position: Top; */
+  border-radius: 10px;
+}
+
+.name {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 12px;
+}

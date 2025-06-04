@@ -68,6 +68,8 @@ function PayFriend() {
               senderName: ctx.user.name,
               senderId: ctx.user.id,
               place: null,
+              coins: Math.round(ctx.payFriendInput),
+              name: friend.name,
             })
           }
         >

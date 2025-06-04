@@ -91,7 +91,11 @@ function Welcome() {
   return (
     <div className={styles.divWelcome}>
       <div className={styles.divTitle}>
-        <img className={styles.logo} src="/logo.png" alt="Belanja Logo" />
+        <img
+          className={styles.logo}
+          src="/belanja logo_ps_alpha.png"
+          alt="Belanja Logo"
+        />
         <h1 className={styles.title}>Belanja</h1>
       </div>
 

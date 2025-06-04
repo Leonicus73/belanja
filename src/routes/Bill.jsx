@@ -1,5 +1,5 @@
 import styles from "./Bill.module.css";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import ProductContext from "../context/ProductContext";
 import Select from "react-select";
@@ -10,7 +10,7 @@ function Bill() {
   const { id } = useParams();
   const ctx = useContext(ProductContext);
   const currentBill = ctx.bills.find((bill) => bill.id === id);
-
+  const navigate = useNavigate();
   const isValidAmount = () => {
     if (
       ctx.currentBill.mode === "split" &&
@@ -64,7 +64,15 @@ function Bill() {
 
   return (
     <div className={styles.divMain}>
-      <h2 className={styles.settlement}>Bill settlement options</h2>
+      <div className={styles.divHeader}>
+        <button
+          className={styles.buttonBack}
+          onClick={() => navigate("/bills")}
+        >
+          󠀩󠁽≫
+        </button>
+        <h2 className={styles.header}>Bill Settement</h2>
+      </div>
       <ValidateValue />
 
       <h2 className={styles.h2BillName}>{currentBill.name}</h2>
@@ -72,72 +80,75 @@ function Bill() {
         {ctx.currentBill.location?.address &&
           "📍" + ctx.currentBill.location.address}
       </p>
-      <Select
-        className={styles.select}
-        options={friendOptions}
-        closeMenuOnSelect={false}
-        isMulti
-        onChange={ctx.handlerChangeInputPayee}
-        placeholder="Select a friend..."
-        formatOptionLabel={(friend) => (
-          <div className={styles.divSelect}>
-            <img
-              src={friend.avatar}
-              alt={friend.label}
-              className={styles.imgAvatar}
-            />
-            <span>{friend.label}</span>
-          </div>
-        )}
-      />
-      <div className={styles.divOptions}>
-        <button
-          onClick={() => ctx.handlerClickBillSettleOption("=")}
-          className={
-            ctx.currentBill.mode === "="
-              ? styles.buttonOptionsActive
-              : styles.buttonOptions
-          }
-        >
-          =
-        </button>
-        <button
-          onClick={() => ctx.handlerClickBillSettleOption("split")}
-          className={
-            ctx.currentBill.mode === "split"
-              ? styles.buttonOptionsActive
-              : styles.buttonOptions
-          }
-        >
-          1.23
-        </button>
-        <button
-          onClick={() => ctx.handlerClickBillSettleOption("%")}
-          className={
-            ctx.currentBill.mode === "%"
-              ? styles.buttonOptionsActive
-              : styles.buttonOptions
-          }
-        >
-          %
-        </button>
-        <button
-          onClick={() => ctx.handlerClickBillSettleOption("belanja")}
-          className={
-            ctx.currentBill.mode === "belanja"
-              ? styles.buttonBelanjaActive
-              : styles.buttonBelanja
-          }
-        >
-          BELANJA
-        </button>
+      <div className={styles.divSelectAndList}>
+        <Select
+          className={styles.select}
+          options={friendOptions}
+          closeMenuOnSelect={false}
+          isMulti
+          onChange={ctx.handlerChangeInputPayee}
+          placeholder="Select a friend..."
+          formatOptionLabel={(friend) => (
+            <div className={styles.divSelect}>
+              <img
+                src={friend.avatar}
+                alt={friend.label}
+                className={styles.imgAvatar}
+              />
+              <span>{friend.label}</span>
+            </div>
+          )}
+        />
+        <div className={styles.divOptions}>
+          <button
+            onClick={() => ctx.handlerClickBillSettleOption("=")}
+            className={
+              ctx.currentBill.mode === "="
+                ? styles.buttonOptionsActive
+                : styles.buttonOptions
+            }
+          >
+            =
+          </button>
+          <button
+            onClick={() => ctx.handlerClickBillSettleOption("split")}
+            className={
+              ctx.currentBill.mode === "split"
+                ? styles.buttonOptionsActive
+                : styles.buttonOptions
+            }
+          >
+            1.23
+          </button>
+          <button
+            onClick={() => ctx.handlerClickBillSettleOption("%")}
+            className={
+              ctx.currentBill.mode === "%"
+                ? styles.buttonOptionsActive
+                : styles.buttonOptions
+            }
+          >
+            %
+          </button>
+          <button
+            onClick={() => ctx.handlerClickBillSettleOption("belanja")}
+            className={
+              ctx.currentBill.mode === "belanja"
+                ? styles.buttonBelanjaActive
+                : styles.buttonBelanja
+            }
+          >
+            BELANJA
+          </button>
+        </div>
+        <div className={styles.divPayeeList}>
+          {ctx.currentBill.fullPayeeList &&
+            ctx.currentBill.fullPayeeList.map((payee) => (
+              <Payee key={payee.id} id={payee.id} />
+            ))}
+        </div>
       </div>
-      <div className={styles.divPayeeList}>
-        {ctx.currentBill.fullPayeeList &&
-          ctx.currentBill.fullPayeeList.map((payee) => (
-            <Payee key={payee.id} id={payee.id} />
-          ))}
-      </div>
+
       <hr className={styles.hrLine}></hr>
       {ctx.currentBill.mode === "split" && (
         <>
@@ -239,6 +250,7 @@ function Bill() {
             senderName: ctx.user.name,
             senderId: ctx.user.id,
             place: ctx.currentBill.name,
+            coins: Math.round(ctx.currentBill.payment),
           })
         }
       >

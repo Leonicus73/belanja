@@ -1,15 +1,19 @@
 import styles from "./MyRewardsPage.module.css";
 import { useContext } from "react";
 import ProductContext from "../context/ProductContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import MyReward from "../components/MyReward";
 
 function MyRewardsPage() {
   const ctx = useContext(ProductContext);
+  const navigate = useNavigate();
   return (
     <div className={styles.divMain}>
       <div className={styles.divHeader}>
-        <button className={styles.buttonBack} onClick={ctx.handlerClickBack}>
+        <button
+          className={styles.buttonBack}
+          onClick={() => navigate("/rewards")}
+        >
           󠀩󠁽≫
         </button>
         <h2 className={styles.header}>My Rewards</h2>

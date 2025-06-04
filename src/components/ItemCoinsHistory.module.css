@@ -1,0 +1,55 @@
+.divMain {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  width: 425px;
+  /* padding-bottom: 5px; */
+  border-bottom: 1px solid rgb(195, 195, 195);
+  border-top: 1px solid rgb(195, 195, 195);
+  height: 120px;
+}
+
+.divNameDate {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  justify-items: center;
+  align-content: center;
+  gap: 10px;
+  margin-left: 50px;
+  width: 250px;
+  height: 80px;
+  /* margin-top: 25px; */
+}
+
+.name {
+  text-transform: capitalize;
+}
+
+.name,
+.date,
+.coins {
+  padding: 0px;
+  margin: 0px;
+}
+
+.name,
+.date {
+  text-align: left;
+}
+
+.name,
+.coins {
+  font-weight: 600;
+}
+
+.coins {
+  margin-right: 50px;
+}
+
+.date {
+  font-size: 14px;
+  margin-top: 5px;
+}

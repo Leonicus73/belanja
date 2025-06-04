@@ -25,6 +25,7 @@ import RewardDetail from "./routes/RewardDetail";
 import MyRewardsPage from "./routes/MyRewardsPage";
 import UseRewards from "./routes/UseRewards";
 import CoinsHistory from "./routes/CoinsHistory";
+import MerchantPaymentPage from "./routes/MerchantPaymentPage";
 
 import styles from "./App.module.css";
 
@@ -59,6 +60,10 @@ function App() {
               element={<PayFriendSucessfulPage />}
             />
             <Route path="paymentMerchant" element={<PaymentPage />} />
+            <Route
+              path="paymentMerchant/:merchantId"
+              element={<MerchantPaymentPage />}
+            />
             <Route path="scan" element={<ScanPage />} />
             <Route path="settle" element={<SettlePage />} />
             <Route path="/*" element={<PageNotFound />} />

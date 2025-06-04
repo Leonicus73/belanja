@@ -1,4 +1,5 @@
 import dataUsers from "../data/Users";
+import merchantData from "../data/Merchants";
 import getRandom from "food-random-module";
 import { v4 as uuid } from "uuid";
 
@@ -263,6 +264,7 @@ export function productReducer(state, action) {
       // console.log(action.actionMeta);
       let newFullPayeeList = state.currentBill.fullPayeeList;
       let newFloatTotal = state.currentBill.floatTotal;
+      let newPercentageTotal = state.currentBill.percentageTotal;
       if (action.actionMeta.action === "select-option") {
         const payee = state.userList.find(
           (payee) => payee.id === action.actionMeta.option.value
@@ -287,6 +289,23 @@ export function productReducer(state, action) {
           (sum, payee) => Number(sum) + Number(payee.float),
           0
         );
+
+        newPercentageTotal = newFullPayeeList.reduce(
+          (sum, payee) => Number(sum) + Number(payee.percentage),
+          0
+        );
+      } else if (action.actionMeta.action === "clear") {
+        newFullPayeeList = state.currentBill.fullPayeeList.filter(
+          (payee) => payee.id === state.user.id
+        );
+        newFloatTotal = newFullPayeeList.reduce(
+          (sum, payee) => Number(sum) + Number(payee.float),
+          0
+        );
+        newPercentageTotal = newFullPayeeList.reduce(
+          (sum, payee) => Number(sum) + Number(payee.percentage),
+          0
+        );
       }
 
       const newEqual = (
@@ -299,6 +318,7 @@ export function productReducer(state, action) {
           ...state.currentBill,
           fullPayeeList: newFullPayeeList,
           floatTotal: newFloatTotal,
+          percentageTotal: newPercentageTotal,
           equal: newEqual,
         },
       };
@@ -712,7 +732,7 @@ export function productReducer(state, action) {
         user: {
           ...state.user,
           coins: updatedCoins,
-          myRewards: [...(state.user.myRewards || []), newReward],
+          myRewards: [newReward, ...(state.user.myRewards || [])],
         },
       };
     }
@@ -730,6 +750,66 @@ export function productReducer(state, action) {
         user: {
           ...state.user,
           myRewards: updatedMyRewards,
+        },
+      };
+    }
+
+    case "COINS_HISTORY": {
+      const { name, coins, rewardId, mode } = action.payload;
+      const now = new Date();
+      const currentDate = {
+        d: now.getDate(),
+        m: now.getMonth() + 1,
+        Month: now.toLocaleDateString("en-US", { month: "short" }),
+        y: now.getFullYear(),
+      };
+      const newCoinsHistory = {
+        uuid: uuid(),
+        rewardId,
+        name,
+        coins,
+        mode,
+        date: currentDate,
+      };
+
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          CoinsHistory: [newCoinsHistory, ...(state.user.CoinsHistory || [])],
+        },
+      };
+    }
+
+    case "HOMEPAGE_MERCHANT_MAKE_PAYMENT": {
+      const now = new Date();
+      const day = now.getDate();
+      const month = now.getMonth() + 1;
+      const Month = now.toLocaleDateString("en-US", { month: "short" });
+      const year = now.getFullYear();
+
+      const updatedWallet = (
+        Number(state.user.wallet) - Number(state.merchant.payment)
+      ).toFixed(2);
+
+      console.log(action.merchantId, "merchantId");
+      const merchant = merchantData.find(
+        (merchant) => merchant.merchantId === action.merchantId
+      );
+
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          wallet: updatedWallet,
+        },
+        merchant: {
+          ...state.merchant,
+          name: merchant.name,
+          id: uuid(),
+          date: { ...state.date, d: day, m: month, Month: Month, year: year },
+          location: { address: merchant.address },
+          settle: false,
         },
       };
     }
