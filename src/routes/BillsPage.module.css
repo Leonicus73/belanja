@@ -7,7 +7,7 @@
   align-items: center;
   align-content: center;
   gap: 20px;
-  height: 750px;
+  height: 740px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -55,5 +55,3 @@
   width: 100%;
   z-index: 100;  Ensures it stays above other elements 
 } */
-
-

@@ -53,7 +53,7 @@ function Welcome() {
         return false;
       }
     } else {
-      console.log("Token Still Valid");
+      // console.log("Token Still Valid");
       return false;
     }
   }

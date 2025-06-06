@@ -52,6 +52,8 @@ function PaymentPage() {
   const ValidateValue = () => {
     if (!ctx.merchant.payment || ctx.merchant.payment <= 0) {
       return <p className={styles.message}>Please enter a positive value</p>;
+    } else if (ctx.merchant.payment > Number(ctx.user.wallet)) {
+      return <p className={styles.message}>Insufficient fund in wallet</p>;
     } else {
       return <p className={styles.message}></p>;
     }
@@ -91,7 +93,11 @@ function PaymentPage() {
         </div>
         <button
           className={styles.buttonPayment}
-          disabled={ctx.merchant.payment <= 0 ? true : false}
+          disabled={
+            ctx.merchant.payment <= 0 || ctx.merchant.payment > ctx.user.wallet
+              ? true
+              : false
+          }
           onClick={ctx.handlerClickMerchantMakePayment}
         >
           Make Payment

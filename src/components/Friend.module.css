@@ -1,24 +1,45 @@
-.divFriend {
+/* .divFriend1 {
   background-color: rgb(255, 255, 255);
   box-shadow: 1px 1px 5px 1px rgb(204, 204, 204);
-  width: 90%;
+  width: 380px;
   border-radius: 20px;
-  height: 100px;
+  height: 110px;
   display: flex;
   flex-direction: row;
   align-items: center;
+  align-content: center;
+  justify-items: center;
   justify-content: center;
-}
+  margin-top: 10px;
+  background-color: aqua;
+} */
 
 .divFriendInner {
   display: flex;
   flex-direction: row;
-  width: 95%;
-  height: 90%;
+  width: 380px;
+  height: 110px;
   align-items: center;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
   border-radius: 15px;
-  box-shadow: 1px 1px 5px 1px rgb(204, 204, 204);
-  padding-left: 10px;
+  box-shadow: 0px 0px 5px 1px rgb(204, 204, 204);
+
+  margin-top: 10px;
+}
+
+.divFriendInner2 {
+  display: flex;
+  flex-direction: row;
+  width: 370px;
+  height: 100px;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+  align-content: center;
+  border-radius: 15px;
+  box-shadow: 0px 0px 5px 1px rgb(204, 204, 204);
 }
 
 .imgFriend {
@@ -28,6 +49,7 @@
   object-position: Top;
   border-radius: 50px;
   margin-right: 20px;
+  margin-left: 10px;
 }
 
 .divDetails {
@@ -36,8 +58,8 @@
   justify-content: center;
   justify-items: center;
   /* padding-top: 20px; */
-
-  width: 100%;
+  height: 90px;
+  width: 200px;
   /* padding-left: 10px; */
 }
 
@@ -51,16 +73,34 @@
   padding: 0px;
   margin: 0px;
   margin-top: 0px;
+  font-size: 14px;
+}
+
+.divButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  justify-items: center;
+  align-items: center;
+  align-content: right;
+  width: 100px;
+  height: 90px;
 }
 
 .buttonActionPay,
-.buttonActionNotify {
-  width: 60px;
-  height: 60px;
-  border-radius: 10px;
+.buttonActionNotify,
+.log {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
   border: 1px solid transparent;
   font-weight: 600;
   margin-right: 10px;
+  box-shadow: 0px 0px 5px 1px rgb(224, 224, 224);
+}
+
+.log:hover {
+  background-color: rgb(245, 245, 245);
 }
 
 .buttonActionPay {

@@ -38,9 +38,9 @@ function Receipt() {
           {Number(currentBill.payment).toFixed(2)}!
         </h2>
       ) : (
-        <h2 className={styles.total}>{`You have paid $${
+        <h2 className={styles.total}>{`You have paid $${Number(
           user.final
-        } of $${Number(currentBill.payment).toFixed(2)} `}</h2>
+        ).toFixed(2)} of $${Number(currentBill.payment).toFixed(2)} `}</h2>
       )}
 
       <button className={styles.buttonBack} onClick={() => navigate("/bills")}>

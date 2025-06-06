@@ -38,7 +38,9 @@ function ItemBill({ id }) {
       <h2 className={styles.billName}>{currentBill.name}</h2>
       <div className={styles.divTotal}>
         <p className={styles.pTotal}>Total Paid</p>
-        <p className={styles.pPayment}>{`$${currentBill.payment}`}</p>
+        <p className={styles.pPayment}>{`$${Number(currentBill.payment).toFixed(
+          2
+        )}`}</p>
       </div>
       <SettleText />
     </div>

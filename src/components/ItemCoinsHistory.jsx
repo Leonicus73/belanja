@@ -31,13 +31,13 @@ function ItemCoinsHistory({ name, mode, coins, date }) {
     if (mode === "redeem") {
       return (
         <div>
-          <p className={styles.coins}>-{coins}</p>
+          <p className={styles.minusCoins}>-{coins}</p>
         </div>
       );
     } else if (mode === "bill" || mode === "friendPaid") {
       return (
         <div>
-          <p className={styles.coins}>+{coins}</p>
+          <p className={styles.addCoins}>+{coins}</p>
         </div>
       );
     }

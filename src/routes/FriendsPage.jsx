@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import ProductContext from "../context/ProductContext";
 import Friend from "../components/Friend";
 import styles from "./FriendsPage.module.css";
-import { Link } from "react-router-dom";
 
 function FriendsPage() {
   const ctx = useContext(ProductContext);
@@ -15,7 +14,7 @@ function FriendsPage() {
     }
   };
 
-  console.log("Friends List in Context:", ctx.user.friends);
+  // console.log("Friends List in Context:", ctx.user.friends);
 
   return (
     <>
@@ -44,13 +43,14 @@ function FriendsPage() {
         </div>
         <div className={styles.divFriendListMap}>
           {ctx.user.friends.map((friend) => (
-            <Link
-              key={friend.id}
-              to={friend.debt > 0 ? `/payfriend/${friend.id}` : `/friends`}
-              className={styles.link}
-            >
-              <Friend key={friend.id} id={friend.id} debt={friend.debt} />
-            </Link>
+            <Friend key={friend.id} id={friend.id} debt={friend.debt} />
+            // <Link
+            //   key={friend.id}
+            //   to={friend.debt > 0 ? `/payfriend/${friend.id}` : `/friends`}
+            //   className={styles.link}
+            // >
+            //   <Friend key={friend.id} id={friend.id} debt={friend.debt} />
+            // </Link>
           ))}
         </div>
       </div>

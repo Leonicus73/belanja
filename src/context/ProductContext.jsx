@@ -6,13 +6,6 @@ import { v4 as uuid } from "uuid";
 
 const ProductContext = createContext();
 
-// const initialState = {
-//   loginNameInput: "alan@belanja.com",
-//   loginPasswordInput: "80604914",
-//   loginError: "",
-//   user: null,
-// };
-
 export function ProductProvider({ children }) {
   const [state, dispatch] = useReducer(productReducer, defaultProduct);
   const navigate = useNavigate();
@@ -25,7 +18,7 @@ export function ProductProvider({ children }) {
     const loginInput = state.loginNameInput.trim();
     const passwordInput = state.loginPasswordInput;
 
-    const matchedUser = dataUsers.find(
+    const matchedUser = state.userList.find(
       (user) => user.email === loginInput || String(user.mobile) === loginInput
     );
 
@@ -113,6 +106,7 @@ export function ProductProvider({ children }) {
   };
 
   const handlerBillSubmit = ({
+    billId,
     id,
     mode,
     amount,
@@ -121,10 +115,22 @@ export function ProductProvider({ children }) {
     place,
     coins,
   }) => {
-    dispatch({ type: "BILL_SUBMIT" });
+    dispatch({ type: "BILL_SUBMIT", coins });
     dispatch({
       type: "SEND_NOTIFICATIONS",
       payload: {
+        id,
+        mode,
+        amount,
+        senderName,
+        senderId,
+        place,
+      },
+    });
+    dispatch({
+      type: "ADD_DEBT_LOG",
+      payload: {
+        billId,
         id,
         mode,
         amount,
@@ -247,6 +253,7 @@ export function ProductProvider({ children }) {
 
   const handlerPayFriend = (id) => {
     dispatch({ type: "PAY_FRIEND", id: id });
+    navigate(`/payfriend/${id}`);
   };
 
   const handlerPayFriendSubmit = ({
@@ -261,6 +268,17 @@ export function ProductProvider({ children }) {
   }) => {
     dispatch({
       type: "SEND_NOTIFICATIONS",
+      payload: {
+        id,
+        mode,
+        amount,
+        senderName,
+        senderId,
+        place,
+      },
+    });
+    dispatch({
+      type: "ADD_DEBT_LOG",
       payload: {
         id,
         mode,

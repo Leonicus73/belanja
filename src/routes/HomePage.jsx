@@ -1,12 +1,22 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { motion } from "motion/react";
+//https://motion.dev/docs/quick-start
 import styles from "./HomePage.module.css";
 import ProductContext from "../context/ProductContext";
 import merchantData from "../data/Merchants";
-import { Link } from "react-router-dom";
 import Merchant from "../components/Merchant";
 
 function HomePage() {
   const ctx = useContext(ProductContext);
+  const transition = {
+    duration: 0.8,
+    delay: 6,
+    ease: "easeInOut",
+    repeat: Infinity,
+    repeatDelay: 6,
+    repeatType: "mirror",
+  };
   return (
     <div className={styles.divWhole}>
       <div className={styles.divMain}>
@@ -37,7 +47,26 @@ function HomePage() {
           </div>
         </div>
       </div>
-      <div className={styles.divPromo}>
+      <motion.div
+        className={styles.divImg}
+        transition={transition}
+        animate={{ x: -415 }}
+      >
+        <img
+          transition={transition}
+          className={styles.imgDoubleCoins}
+          src="/doublecoins_banner_upres_edited.png"
+          alt="double coins"
+        />
+
+        <img
+          transition={transition}
+          className={styles.imgDoubleCoins}
+          src="/1000coins_upres_edited.png"
+          alt="double coins"
+        />
+      </motion.div>
+      {/* <div className={styles.divPromo}>
         <div className={styles.divPromoText}>
           <p className={styles.launch}>
             Launch Promotion <span className={styles.span}>1 Jan - 31 Dec</span>
@@ -50,7 +79,7 @@ function HomePage() {
           src="/belanja logo_ps_alpha.png"
           alt="Belanja Logo"
         />
-      </div>
+      </div> */}
       <h2 className={styles.h2Merchants}>Merchants</h2>
       <div className={styles.divMerchantList}>
         {merchantData.map((merchant) => (

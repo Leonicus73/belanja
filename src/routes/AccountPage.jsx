@@ -16,7 +16,7 @@ function AccountPage() {
           src={ctx.user.avatar}
           alt="User Photo"
         ></img>
-        <h2 className={styles.walletText}>Balenja Wallet</h2>
+        <h2 className={styles.walletText}>Belanja Wallet</h2>
         <h2 className={styles.wallet}>{`$${Number(ctx.user.wallet).toFixed(
           2
         )}`}</h2>

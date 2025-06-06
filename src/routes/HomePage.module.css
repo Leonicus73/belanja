@@ -5,6 +5,7 @@
   justify-items: center;
   align-items: center;
   align-content: center;
+  overflow-x: hidden;
 }
 
 .divMain {
@@ -198,4 +199,18 @@
   height: 400px;
   /* background-color: aqua; */
   padding: 0px;
+}
+
+.imgDoubleCoins {
+  width: 95%;
+  border-radius: 20px;
+  box-shadow: 0px 0px 5px 1px rgb(210, 210, 210);
+}
+
+.divImg {
+  display: flex;
+  flex-direction: row;
+  gap: 25px;
+  margin-left: 20px;
+  margin-top: 20px;
 }

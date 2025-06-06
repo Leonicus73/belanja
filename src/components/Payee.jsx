@@ -41,7 +41,7 @@ function Payee({ id }) {
           type="number"
           className={styles.input}
           placeholder="0.00"
-          value={payee && payee.value && payee.value}
+          value={payee && payee.float}
           onChange={(e) => ctx.handlerOnChangePayeeFloatInput(e, id)}
         ></input>
       )}
@@ -50,7 +50,7 @@ function Payee({ id }) {
           type="number"
           className={styles.input}
           placeholder="0"
-          value={payee && payee.percentage && payee.percentage}
+          value={payee && payee.percentage}
           onChange={(e) => ctx.handlerOnChangePayeePecentageInput(e, id)}
         ></input>
       )}

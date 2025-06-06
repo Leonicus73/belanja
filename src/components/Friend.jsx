@@ -1,10 +1,12 @@
 import { useContext } from "react";
 import ProductContext from "../context/ProductContext";
 import styles from "./Friend.module.css";
+import { useNavigate } from "react-router-dom";
 
 function Friend({ id, debt }) {
   const ctx = useContext(ProductContext);
   const friend = ctx.userList.find((user) => user.id === id);
+  const navigate = useNavigate();
 
   if (!friend) {
     console.warn("Friend not found in user.friends:", id);
@@ -54,7 +56,7 @@ function Friend({ id, debt }) {
           })
         }
       >
-        Nudge
+        👉
       </button>
     );
   }
@@ -62,16 +64,26 @@ function Friend({ id, debt }) {
   return (
     <div className={styles.divFriend}>
       <div className={styles.divFriendInner}>
-        <img
-          className={styles.imgFriend}
-          src={friend.avatar}
-          alt={friend.name}
-        ></img>
-        <div className={styles.divDetails}>
-          <p className={styles.pName}>{friend.name}</p>
-          {debtStatement}
+        <div className={styles.divFriendInner2}>
+          <img
+            className={styles.imgFriend}
+            src={friend.avatar}
+            alt={friend.name}
+          ></img>
+          <div className={styles.divDetails}>
+            <p className={styles.pName}>{friend.name}</p>
+            {debtStatement}
+          </div>
+          <div className={styles.divButtons}>
+            <div className={styles.divAction}>{actionButton}</div>
+            <button
+              className={styles.log}
+              onClick={() => navigate(`/debtLog/${id}`)}
+            >
+              📒
+            </button>
+          </div>
         </div>
-        <div className={styles.divAction}>{actionButton}</div>
       </div>
     </div>
   );

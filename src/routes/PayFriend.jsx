@@ -9,10 +9,14 @@ function PayFriend() {
   const friend = ctx.user.friends.find((friend) => friend.id === id);
 
   const isValidAmount =
-    ctx.payFriendInput >= 0.01 && ctx.payFriendInput <= friend.debt;
+    ctx.payFriendInput >= 0.01 &&
+    ctx.payFriendInput <= friend.debt &&
+    ctx.payFriendInput <= ctx.user.wallet;
 
   const ValidateValue = () => {
-    if (!isValidAmount) {
+    if (ctx.payFriendInput > Number(ctx.user.wallet)) {
+      return <p className={styles.message}>Insufficient fund in wallet</p>;
+    } else if (!isValidAmount) {
       return (
         <p className={styles.message}>
           Please enter a value between 0.01 to {Number(friend.debt).toFixed(2)}

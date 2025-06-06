@@ -1,3 +1,4 @@
+import validator from "validator";
 import dataUsers from "../data/Users";
 import merchantData from "../data/Merchants";
 import getRandom from "food-random-module";
@@ -52,26 +53,43 @@ export function productReducer(state, action) {
     case "LOGIN_ERROR":
       return { ...state, loginError: action.value };
 
-    case "LOGIN_SUCCESS":
+    case "LOGIN_SUCCESS": {
+      let newUser = null;
+      if (validator.isEmail(state.loginNameInput)) {
+        newUser = state.userList.find(
+          (user) => user.email === state.loginNameInput
+        );
+      } else if (validator.isMobilePhone(state.loginNameInput)) {
+        newUser = state.userList.find(
+          (user) => user.mobile.toString() === state.loginNameInput
+        );
+      }
       return {
         ...state,
-        isLoggedIn: true,
-        userList: dataUsers,
-        user: action.payload,
-        loginError: "",
-        loginNameInput: "",
-        loginPasswordInput: "",
-        bills: Array.isArray(action.payload.bills) ? action.payload.bills : [],
-        wallet: action.payload.wallet ?? 0,
-        lifeTimeSpending: action.payload.lifeTimeSpending ?? 0,
-        friends: Array.isArray(action.payload.friends)
-          ? action.payload.friends
-          : [],
-        notifications: action.payload.notifications ?? {
-          notify: false,
-          list: [],
-        },
+        isLoggedIn: !!newUser,
+        user: newUser,
+        bills: Array.isArray(newUser?.bills) ? newUser.bills : [],
       };
+    }
+    // return {
+    //   ...state,
+    //   isLoggedIn: true,
+    //   userList: dataUsers,
+    //   user: action.payload,
+    //   loginError: "",
+    //   loginNameInput: "",
+    //   loginPasswordInput: "",
+    //   bills: Array.isArray(action.payload.bills) ? action.payload.bills : [],
+    //   wallet: action.payload.wallet ?? 0,
+    //   lifeTimeSpending: action.payload.lifeTimeSpending ?? 0,
+    //   friends: Array.isArray(action.payload.friends)
+    //     ? action.payload.friends
+    //     : [],
+    //   notifications: action.payload.notifications ?? {
+    //     notify: false,
+    //     list: [],
+    //   },
+    // };
 
     case "LOGOUT": {
       const user = { ...state.user, bills: state.bills };
@@ -170,7 +188,18 @@ export function productReducer(state, action) {
     }
 
     case "SPLIT": {
-      const newBills = [state.merchant, ...state.bills];
+      const updatedMerchant = {
+        ...state.merchant,
+        fullPayeeList: [
+          {
+            id: state.user.id,
+            name: state.user.name,
+            float: "",
+            percentage: "",
+          },
+        ],
+      };
+      const newBills = [updatedMerchant, ...state.bills];
       return {
         ...state,
         merchant: {
@@ -396,10 +425,7 @@ export function productReducer(state, action) {
         return payeeUser;
       });
 
-      const updatedCoins =
-        newCurrentBill.mode === "belanja"
-          ? state.user.coins + Math.round(locatedPayee[state.user.id].final * 2)
-          : state.user.coins + Math.round(locatedPayee[state.user.id].final);
+      const updatedCoins = Number(state.user.coins) + Number(action.coins);
 
       return {
         ...state,
@@ -469,7 +495,7 @@ export function productReducer(state, action) {
         avatar: `https://i.pravatar.cc/100?u=${uuid()}`, // Random avatar
         lifeTimeSpending: 0,
         wallet: 0,
-        coins: 22355,
+        coins: 1000,
         notifications: { notify: false, list: [] },
         friends: [],
         bills: [],
@@ -484,14 +510,17 @@ export function productReducer(state, action) {
         isLoggedIn: true,
       };
     }
-    case "TOP_UP":
+    case "TOP_UP": {
+      const updatedWallet = Number(state.user.wallet) + Number(action.value);
       return {
         ...state,
         user: {
           ...state.user,
-          wallet: state.user.wallet + action.value,
+          wallet: updatedWallet,
+          // wallet: state.user.wallet + action.value,
         },
       };
+    }
 
     case "CHANGE_PAY_FRIEND_INPUT": {
       return {
@@ -562,6 +591,120 @@ export function productReducer(state, action) {
       };
     }
 
+    case "ADD_DEBT_LOG": {
+      const { billId, id, mode, amount, senderName, senderId, place } =
+        action.payload;
+      const now = new Date();
+      const currentDate = {
+        d: now.getDate(),
+        m: now.getMonth() + 1,
+        Month: now.toLocaleDateString("en-US", { month: "short" }),
+        y: now.getFullYear(),
+      };
+
+      let updatedFriends = state.user.friends;
+      let updatedUserList = state.userList;
+
+      if (mode === "bill") {
+        const bill = state.user.bills.find((bill) => bill.id === billId);
+        const locatedPayee = {};
+        Object.values(bill.fullPayeeList).forEach((payee) => {
+          locatedPayee[payee.id] = payee;
+        });
+
+        updatedFriends = state.user.friends.map((friend) => {
+          if (
+            locatedPayee[friend.id] &&
+            friend.id === locatedPayee[friend.id].id
+          ) {
+            const newDebt = {
+              debtId: uuid(),
+              date: currentDate,
+              senderId,
+              senderName,
+              mode,
+              newDebt: locatedPayee[friend.id].final,
+              place,
+            };
+            return { ...friend, debtLog: [newDebt, ...(friend.debtLog || [])] };
+          }
+          return friend;
+        });
+
+        updatedUserList = state.userList.map((user) => {
+          if (locatedPayee[user.id] && user.id !== state.user.id) {
+            const updatedFriends = user.friends.map((friend) => {
+              if (friend.id === state.user.id) {
+                const newDebt = {
+                  debtId: uuid(),
+                  date: currentDate,
+                  senderId: state.user.id,
+                  senderName: state.user.name,
+                  mode,
+                  newDebt: locatedPayee[user.id].final,
+                  place,
+                };
+                return {
+                  ...friend,
+                  debtLog: [newDebt, ...(friend.debtLog || [])],
+                };
+              }
+              return friend;
+            });
+            return { ...user, friends: updatedFriends };
+          }
+          return user;
+        });
+      } else if (mode === "friendPaid") {
+        updatedFriends = state.user.friends.map((friend) => {
+          if (friend.id === id) {
+            const newDebt = {
+              debtId: uuid(),
+              date: currentDate,
+              senderId,
+              senderName,
+              mode,
+              newDebt: amount,
+              place,
+            };
+            return { ...friend, debtLog: [newDebt, ...(friend.debtLog || [])] };
+          }
+          return friend;
+        });
+
+        updatedUserList = state.userList.map((user) => {
+          if (user.id === id) {
+            const updatedFriends = user.friends.map((friend) => {
+              if (friend.id === state.user.id) {
+                const newDebt = {
+                  debtId: uuid(),
+                  date: currentDate,
+                  senderId: state.user.id,
+                  senderName: state.user.name,
+                  mode,
+                  newDebt: amount,
+                  place,
+                };
+                return {
+                  ...friend,
+                  debtLog: [newDebt, ...(friend.debtLog || [])],
+                };
+              }
+              return friend;
+            });
+            return { ...user, friends: updatedFriends };
+          }
+          return user;
+        });
+      }
+
+      return {
+        ...state,
+        userList: updatedUserList,
+        user: { ...state.user, friends: updatedFriends },
+      };
+    }
+
     case "SEND_NOTIFICATIONS": {
       const { id, mode, amount, senderName, senderId, place } = action.payload;
       const now = new Date();
@@ -591,7 +734,7 @@ export function productReducer(state, action) {
               ...user,
               notifications: {
                 ...user.notifications,
-                list: [...user.notifications.list, newNotification],
+                list: [newNotification, ...user.notifications.list],
                 notify: true,
               },
             };
@@ -628,7 +771,7 @@ export function productReducer(state, action) {
               notifications: {
                 ...payeeUser.notifications,
                 notify: true,
-                list: [...payeeUser.notifications.list, newNotification],
+                list: [newNotification, ...payeeUser.notifications.list],
               },
             };
           }

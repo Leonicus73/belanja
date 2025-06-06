@@ -30,8 +30,8 @@
 
 .name,
 .date,
-.minusCoins,
-.addCoins {
+.minusDebt,
+.addDebt {
   padding: 0px;
   margin: 0px;
 }
@@ -42,13 +42,13 @@
 }
 
 .name,
-.minusCoins,
-.addCoins {
+.minusDebt,
+.addDebt {
   font-weight: 600;
 }
 
-.minusCoins,
-.addCoins {
+.minusDebt,
+.addDebt {
   margin-right: 50px;
 }
 
@@ -57,10 +57,10 @@
   margin-top: 5px;
 }
 
-.addCoins {
+.minusDebt {
   color: rgb(31, 155, 31);
 }
 
-.minusCoins {
+.addDebt {
   color: rgb(169, 30, 30);
 }
